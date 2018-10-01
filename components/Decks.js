@@ -1,23 +1,25 @@
 import React, { Component } from 'react'
 import DeckCard from './DeckCard';
-import { View, StyleSheet, ScrollView, FlatList } from 'react-native'
+import { View, StyleSheet, ScrollView, Text } from 'react-native'
 import FloattingButton from './FloattingButton';
+import { connect } from 'react-redux'
 class Decks extends Component {
 
-    renderItem = ({item}) => {
-        return <DeckCard text={item}  />
+    renderItem = ({ item }) => {
+        return <DeckCard deck={item} />
     }
 
-    render() {
 
-        const text = [
-            'lmao', 'touchdown', 'pas deep right', 'lmao', 'touchdown', 'pas deep right',
-            'lmao', 'touchdown', 'pas deep right', 'lmao', 'touchdown', 'pas deep right'
-        ]
+    render() {
         return (
             <View style={styles.container}>
-                <FlatList data={text} renderItem={this.renderItem} />
-                <FloattingButton />
+                <ScrollView>
+                    { this.props.decks.map( (item) => {
+                        return <DeckCard key={item.id} deck={item}/>
+                    })}
+                </ScrollView>
+
+                <FloattingButton navigation={this.props.navigation} />
             </View>
         )
     }
@@ -26,8 +28,15 @@ class Decks extends Component {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        marginTop: 40
+        marginTop: 0
     }
 })
 
-export default Decks
+function mapStateToProps({ decks }) {
+
+    return {
+        decks: Object.values(decks)
+    }
+}
+
+export default connect(mapStateToProps)(Decks)

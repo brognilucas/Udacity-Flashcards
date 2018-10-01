@@ -1,10 +1,12 @@
 import React from 'React'
 import { TouchableOpacity, StyleSheet } from 'react-native'
 import { Entypo } from '@expo/vector-icons'
-export default function FloattingButton() {
+
+export default function FloattingButton({ navigation }) {
+
     return (
-        <TouchableOpacity style={styles.btn}>
-            <Entypo name='plus' style={styles.btnText}/>
+        <TouchableOpacity style={styles.btn} onPress={() => navigation.navigate('CreateDeck')}>
+            <Entypo name='plus' style={styles.btnText} />
         </TouchableOpacity>
     )
 }
@@ -21,12 +23,12 @@ const styles = StyleSheet.create({
         right: 10,
         flex: 1
     },
-    btnText: { 
+    btnText: {
         fontSize: 40,
         marginTop: 10,
         marginBottom: 10,
         color: '#FFF',
-        textAlign: 'center', 
+        textAlign: 'center',
         alignItems: 'center'
     }
 })
