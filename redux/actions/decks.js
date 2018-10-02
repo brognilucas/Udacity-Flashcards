@@ -17,11 +17,11 @@ export function addDeck(name) {
     return (dispatch) => {
         let deck = {
             id: idGenerator(),
-            name
+            name, questions: []
         }
 
         AsyncStorage.mergeItem(STORAGE_DECKS , JSON.stringify({
-            [deck.id] : deck
+            [deck.id] : deck 
         }))
 
         dispatch(addDeckHandler(deck))

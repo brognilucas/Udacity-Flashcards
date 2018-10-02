@@ -14,11 +14,11 @@ class NewDeck extends Component {
         this.setState({
             deckName: ''
         })
-        
+
         this.props.navigation.goBack()
 
     }
-    
+
     render() {
         return (
             <View style={{ padding: 10, flex: 1 }}>
@@ -34,6 +34,7 @@ class NewDeck extends Component {
                     onPress={this.submit} >
                     <Text style={styles.btnText}> Submit </Text>
                 </TouchableOpacity>
+
             </View>
         )
     }
@@ -41,9 +42,9 @@ class NewDeck extends Component {
 
 styles = StyleSheet.create({
     text: {
-        textAlign: 'center',
         fontSize: 40,
-        marginTop: 100
+        marginTop: 100,
+        textAlign: 'center'
     },
     dataText: {
         height: 20,
@@ -56,16 +57,16 @@ styles = StyleSheet.create({
         color: '#FFF',
         fontSize: 20,
         alignContent: 'center',
-        marginLeft: 80,
         marginTop: 5
     },
     btn: {
-        width: 230,
-        height: 40,
+        flex: 1,
+        maxHeight: 40,
+        justifyContent: 'center',
+        flexDirection: 'row',
         marginLeft: 35,
         marginRight: 35,
         marginTop: 150,
-        textAlign: 'center',
         alignContent: 'center',
         borderRadius: 6,
         backgroundColor: '#1D2D44'

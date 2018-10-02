@@ -1,26 +1,27 @@
 import React, { Component } from 'react'
 import { TouchableOpacity, Text, StyleSheet, View } from 'react-native'
-
+import { connect } from 'react-redux'
+import { MaterialCommunityIcons} from '@expo/vector-icons' 
 class DeckCard extends Component {
 
   goToPage = () => {
-    alert('hahahah')
+    const { deck, navigation } = this.props
+    navigation.navigate('CardDetail' , { 
+      deck
+    })
   }
 
   render() {
 
     const { deck } = this.props
-
-
-    alert(deck)
-
     return (
       <TouchableOpacity style={styles.card} onPress={this.goToPage}>
         <Text style={styles.title}>
           {deck.name}
         </Text>
         <Text style={styles.subtitle}>
-          {deck.id}
+        <MaterialCommunityIcons name='cards' size={25} />
+          {deck.questions.length} cards 
         </Text>
       </TouchableOpacity>
     )
@@ -49,8 +50,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     textAlign: 'center',
     color: '#FFFEEE',
-    marginTop: 10
+    marginTop: 5
   }
 })
 
-export default DeckCard
+function mapStateToProps({ decks } , { id , navigation}){
+  return {
+    deck: decks[id], 
+    navigation
+  }
+}
+
+export default connect(mapStateToProps)(DeckCard)

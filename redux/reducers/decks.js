@@ -6,7 +6,7 @@ export default function decks(state = [], action) {
         case TYPES.ADD_DECK:
             return {
                 ...state,
-                ...action.deck
+                [action.deck.id] : action.deck
             }
 
         default:
