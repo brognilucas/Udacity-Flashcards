@@ -6,6 +6,7 @@ import CardDetail from '../components/CardDetail'
 import { FontAwesome } from '@expo/vector-icons'
 import React from 'react'
 import NewDeck from '../components/NewDeck';
+import Quiz from '../components/Quiz';
 const Tabs = TabNavigator({
   HomePage: {
     screen: Decks,
@@ -14,7 +15,7 @@ const Tabs = TabNavigator({
       tabBarIcon: () => <FontAwesome name='home' size={30} />
     }
   },
-  Quiz: {
+  QuizSelection: {
     screen: Decks,
     navigationOptions: {
       tabBarLabel: 'Quiz',
@@ -48,6 +49,15 @@ const Stack = StackNavigator({
   },
   AddQuestion: { 
     screen: AddQuestion,
+    navigationOptions: { 
+      headerTintColor: '#FFF', 
+      headerStyle: { 
+        backgroundColor: '#93A8AC'
+      }
+    }
+  },
+  Quiz: { 
+    screen: Quiz,
     navigationOptions: { 
       headerTintColor: '#FFF', 
       headerStyle: { 

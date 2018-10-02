@@ -21,7 +21,7 @@ class DeckCard extends Component {
         </Text>
         <Text style={styles.subtitle}>
         <MaterialCommunityIcons name='cards' size={25} />
-          {deck.questions.length} cards 
+          {deck.questions? deck.questions.length : 0 } cards 
         </Text>
       </TouchableOpacity>
     )

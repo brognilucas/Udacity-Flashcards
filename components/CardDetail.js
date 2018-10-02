@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { View, TouchableOpacity, StyleSheet, Text } from 'react-native'
-
+import { connect } from 'react-redux'
 class CardDetail extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params } = navigation.state;
@@ -17,14 +17,27 @@ class CardDetail extends Component {
         navigation.navigate('AddQuestion' , { deck:  params.deck } )
     }
 
+
+    startQuiz = () => { 
+
+        const { navigation } = this.props
+
+        const { id } = navigation.state.params.deck;
+        navigation.navigate('Quiz' , { id } )
+    }
+
     render() {
+        const { deck } = this.props
+
         return (
             <View style={{ flex: 1, alignContent: 'center' }}>
-
+                <View>
+                    <Text> Currently has { deck.questions ? deck.questions.length : 0 } questions </Text>
+                </View>
                 <TouchableOpacity style={styles.btnAdd} onPress={this.addQuestion}>
                     <Text style={styles.btnAddText}> Add Card </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnQuiz}>
+                <TouchableOpacity style={styles.btnQuiz} onPress={this.startQuiz}>
                     <Text style={styles.btnQuizText}> Start Quiz </Text>
                 </TouchableOpacity>
             </View>
@@ -39,7 +52,7 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderRadius: 5,
         marginTop: 200,
-        backgroundColor: '#040F0F',
+        backgroundColor: '#1D2D44',
         marginLeft: 20,
         marginRight: 20,
         height: 50
@@ -68,4 +81,13 @@ const styles = StyleSheet.create({
     }
 })
 
-export default CardDetail
+function mapStateToProps({decks} , { navigation } ){
+
+    const { id } = navigation.state.params.deck;
+
+    return { 
+        deck: decks[id]
+    }
+}
+
+export default connect(mapStateToProps)(CardDetail)

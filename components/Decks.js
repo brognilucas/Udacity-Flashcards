@@ -3,12 +3,17 @@ import DeckCard from './DeckCard';
 import { View, StyleSheet, FlatList, Text, TouchableOpacity } from 'react-native'
 import FloattingButton from './FloattingButton';
 import { connect } from 'react-redux'
+import { receiveDecks } from '../redux/actions/decks'
 class Decks extends Component {
 
     renderItem = ({ item }) => {
         return <DeckCard key={item} id={item} navigation={this.props.navigation} />
     }
 
+
+    componentDidMount(){
+        this.props.dispatch(receiveDecks())
+    }
 
     render() {
         const { decks } = this.props
