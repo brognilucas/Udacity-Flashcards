@@ -14,16 +14,16 @@ class CardDetail extends Component {
         const { navigation } = this.props
 
         const { params } = navigation.state;
-        navigation.navigate('AddQuestion' , { deck:  params.deck } )
+        navigation.navigate('AddQuestion', { deck: params.deck })
     }
 
 
-    startQuiz = () => { 
+    startQuiz = () => {
 
         const { navigation } = this.props
 
         const { id } = navigation.state.params.deck;
-        navigation.navigate('Quiz' , { id } )
+        navigation.navigate('Quiz', { id })
     }
 
     render() {
@@ -31,13 +31,16 @@ class CardDetail extends Component {
 
         return (
             <View style={{ flex: 1, alignContent: 'center' }}>
-                <View>
-                    <Text> Currently has { deck.questions ? deck.questions.length : 0 } questions </Text>
+                <View style={styles.info}>
+                    <Text style={styles.infoTxt}> Currently this deck has {deck.questions ? deck.questions.length : 0} questions </Text>
                 </View>
                 <TouchableOpacity style={styles.btnAdd} onPress={this.addQuestion}>
                     <Text style={styles.btnAddText}> Add Card </Text>
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.btnQuiz} onPress={this.startQuiz}>
+                <TouchableOpacity style={[styles.btnQuiz,
+                deck.questions.length === 0 ? { opacity: 0.3 } : { opacity: 1 }
+
+                ]} onPress={this.startQuiz} disabled={deck.questions.length === 0}>
                     <Text style={styles.btnQuizText}> Start Quiz </Text>
                 </TouchableOpacity>
             </View>
@@ -51,11 +54,19 @@ const styles = StyleSheet.create({
         alignContent: 'center',
         alignItems: 'center',
         borderRadius: 5,
-        marginTop: 200,
+        marginTop: 100,
         backgroundColor: '#1D2D44',
         marginLeft: 20,
         marginRight: 20,
         height: 50
+    },
+    info: {
+        justifyContent: 'center', 
+        marginTop: 100,
+    },
+    infoTxt: { 
+        textAlign: 'center',
+        fontSize: 25,
     },
     btnQuiz: {
         alignContent: 'center',
@@ -81,11 +92,11 @@ const styles = StyleSheet.create({
     }
 })
 
-function mapStateToProps({decks} , { navigation } ){
+function mapStateToProps({ decks }, { navigation }) {
 
     const { id } = navigation.state.params.deck;
 
-    return { 
+    return {
         deck: decks[id]
     }
 }

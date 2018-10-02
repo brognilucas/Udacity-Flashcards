@@ -7,6 +7,7 @@ import { FontAwesome } from '@expo/vector-icons'
 import React from 'react'
 import NewDeck from '../components/NewDeck';
 import Quiz from '../components/Quiz';
+import HistoryQuiz from '../components/HistoryQuiz';
 const Tabs = TabNavigator({
   HomePage: {
     screen: Decks,
@@ -15,11 +16,12 @@ const Tabs = TabNavigator({
       tabBarIcon: () => <FontAwesome name='home' size={30} />
     }
   },
-  QuizSelection: {
-    screen: Decks,
+  History: {
+    screen: HistoryQuiz,
     navigationOptions: {
-      tabBarLabel: 'Quiz',
-      tabBarIcon: () => <FontAwesome name='question' size={30} />
+      tabBarLabel: 'History',
+      tabBarIcon: () => <FontAwesome name='history' size={30} />
+    
     }
   }
 });
