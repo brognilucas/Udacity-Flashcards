@@ -4,9 +4,32 @@ const HISTORY = 'HISTORY'
 
 export const TYPES = {
     SAVE_HISTORY: 'SAVE_HISTORY',
-    RECEIVE_HISTORY: 'RECEIVE_HISTORY'
+    RECEIVE_HISTORY: 'RECEIVE_HISTORY',
+    REMOVE_HISTORY: 'REMOVE_HISTO'
 }
 
+export function removeHistory(deckID){
+
+    return async (dispatch) => {
+        const history = await AsyncStorage.getItem(HISTORY).then(JSON.parse)
+
+        const filteredHistory = Object.values(history).filter(item => item.deck !== deckID)
+
+        await AsyncStorage.setItem(HISTORY, JSON.stringify(filteredHistory))
+
+        await dispatch(removeHistoryHandler(filteredHistory))
+
+    }
+
+}
+
+function removeHistoryHandler(history){
+    // alert(deckId)
+    return { 
+        type: TYPES.REMOVE_HISTORY, 
+        history 
+    }
+}
 
 function saveHistoryHandler(history) {
     return {
@@ -33,12 +56,14 @@ export function receiveHistory() {
 
 export function saveHistory(history) {
 
-    return (dispatch) => {
+    return async (dispatch) => {
 
+        const hist = await AsyncStorage.getItem(HISTORY).then(JSON.parse)
 
         history.id = idGenerator()
 
-        AsyncStorage.mergeItem(HISTORY, JSON.stringify({
+        await AsyncStorage.setItem(HISTORY, JSON.stringify({
+            ...hist, 
             [history.id]: history
         }))
 

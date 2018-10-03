@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
-import { View, TouchableOpacity, StyleSheet, Text } from 'react-native'
+import { View, TouchableOpacity, StyleSheet, Text, Alert } from 'react-native'
 import { connect } from 'react-redux'
+import { removeQuestions, removeCard } from '../redux/actions/decks'
+
+import { clearLocalNotification, setLocalNotification } from '../utils'
 class CardDetail extends Component {
     static navigationOptions = ({ navigation }) => {
         const { params } = navigation.state;
@@ -20,14 +23,58 @@ class CardDetail extends Component {
 
     startQuiz = () => {
 
+        clearLocalNotification()
+        .then( setLocalNotification())
+        
         const { navigation } = this.props
 
         const { id } = navigation.state.params.deck;
         navigation.navigate('Quiz', { id })
     }
 
+    removeQuestions = () => {
+
+        const { navigation, dispatch } = this.props
+
+        const { id } = navigation.state.params.deck;
+
+
+        dispatch(removeQuestions(id))
+    }
+
+
+    removeCard = () => {
+        Alert.alert(
+            'Confirm',
+            'Are you sure?',
+            [
+                { text: 'Cancel', onPress: () => { } },
+                {
+                    text: 'OK', onPress: () => {
+
+                        const { navigation, dispatch } = this.props
+
+                        const { id } = navigation.state.params.deck;
+
+                        navigation.goBack()
+
+                        dispatch(removeCard(id))
+                    }
+                },
+            ],
+        )
+    }
+
     render() {
         const { deck } = this.props
+
+        if (!deck) {
+            //Created just for return without error on remove card
+            return (
+                <View>
+                </View>
+            )
+        }
 
         return (
             <View style={{ flex: 1, alignContent: 'center' }}>
@@ -43,6 +90,18 @@ class CardDetail extends Component {
                 ]} onPress={this.startQuiz} disabled={deck.questions.length === 0}>
                     <Text style={styles.btnQuizText}> Start Quiz </Text>
                 </TouchableOpacity>
+                <View style={styles.removeBtn}>
+                    <TouchableOpacity onPress={this.removeCard}>
+                        <Text style={styles.removeBtnTxt}> Remove Card </Text>
+                    </TouchableOpacity>
+                    {deck.questions.length > 0 && (
+                        <TouchableOpacity onPress={this.removeQuestions}>
+                            <Text style={styles.removeBtnTxt}> Remove Questions </Text>
+                        </TouchableOpacity>
+                    )}
+
+                </View>
+
             </View>
         )
     }
@@ -50,6 +109,16 @@ class CardDetail extends Component {
 
 
 const styles = StyleSheet.create({
+    removeBtnTxt: {
+        fontSize: 15,
+        color: '#F13030'
+    },
+    removeBtn: {
+        flex: 1,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center'
+    },
     btnAdd: {
         alignContent: 'center',
         alignItems: 'center',
@@ -61,10 +130,10 @@ const styles = StyleSheet.create({
         height: 50
     },
     info: {
-        justifyContent: 'center', 
+        justifyContent: 'center',
         marginTop: 100,
     },
-    infoTxt: { 
+    infoTxt: {
         textAlign: 'center',
         fontSize: 25,
     },

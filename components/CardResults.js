@@ -43,10 +43,10 @@ class CardResults extends Component {
                 <TouchableOpacity onPress={this.saveHistory} style={styles.btn}>
                     <Text style={styles.btnText} onPress={this.saveHistory}> Save on History  </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.saveHistory} style={styles.btn}>
-                    <Text style={styles.btnText} onPress={this.goToDeck}> Back to Deck </Text>
+                <TouchableOpacity onPress={this.goToDeck} style={styles.btn}>
+                    <Text style={styles.btnText} > Back to Deck </Text>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.saveHistory} style={styles.btn}>
+                <TouchableOpacity onPress={restart} style={styles.btn}>
                     <Text style={styles.btnText} onPress={restart}>  Restart Quiz </Text>
                 </TouchableOpacity>
             </View>

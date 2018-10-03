@@ -18,7 +18,16 @@ export default function decks(state = {}, action) {
                 ...state, 
                 [action.deck.id] : action.deck
             }
-
+        case TYPES.REMOVE_QUETIONS: 
+            return { 
+                ...state, 
+                [action.deck.id] : action.deck
+            }
+        case TYPES.REMOVE_CARD: 
+            delete state[action.id]
+            return { 
+                ...state
+            }
         default:
             return state
     }
