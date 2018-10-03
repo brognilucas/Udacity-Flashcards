@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { View, TextInput, Text, StyleSheet, TouchableOpacity, Platform } from 'react-native'
 import { connect } from 'react-redux'
 import { addDeck } from '../redux/actions/decks'
+import { idGenerator } from '../utils'
 class NewDeck extends Component {
 
     state = {
@@ -9,13 +10,22 @@ class NewDeck extends Component {
     }
 
     submit = () => {
-        this.props.dispatch(addDeck(this.state.deckName))
+
+        let id = idGenerator()
+
+        let deck = {
+            id,
+            name: this.state.deckName
+        }
+
+
+        this.props.dispatch(addDeck(this.state.deckName, id))
+
+        this.props.navigation.navigate('CardDetail', { deck })
 
         this.setState({
             deckName: ''
         })
-
-        this.props.navigation.goBack()
 
     }
 

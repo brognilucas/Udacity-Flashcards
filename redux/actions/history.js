@@ -24,7 +24,6 @@ export function removeHistory(deckID){
 }
 
 function removeHistoryHandler(history){
-    // alert(deckId)
     return { 
         type: TYPES.REMOVE_HISTORY, 
         history 

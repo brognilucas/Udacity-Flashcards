@@ -55,10 +55,10 @@ export function receiveDecks(){
     }
 }
 
-export function addDeck(name) {
+export function addDeck(name , id ) {
     return (dispatch) => {
         let deck = {
-            id: idGenerator(),
+            id, 
             name, questions: []
         }
 
